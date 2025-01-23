@@ -1,6 +1,7 @@
 ARG CUDA_VERSION=12.3.2
 # note ARG needs to appear after FROM unless explicitly used inthe FROM call
 FROM nvidia/cuda:${CUDA_VERSION}-base-ubuntu22.04
+ARG MMSEQS2_VERSION=17.b804f
 
 #Setup Miniforge using official miniforge dockerfile
 ARG MINIFORGE_NAME=Miniforge3
@@ -42,22 +43,19 @@ RUN apt-get update > /dev/null && \
     if [ ${MINIFORGE_NAME} = "Mambaforge"* ]; then \
         echo '. ${CONDA_DIR}/etc/.mambaforge_deprecation.sh' >> /etc/skel/.bashrc && \
         echo '. ${CONDA_DIR}/etc/.mambaforge_deprecation.sh' >> ~/.bashrc; \
-    fi
-
-# now starting colabfold and mmseqs2 install
-ARG MMSEQS2_VERSION=17.b804f
-
-RUN apt-get update && apt-get install -y wget cuda-nvcc-$(echo $CUDA_VERSION | cut -d'.' -f1,2 | tr '.' '-') --no-install-recommends --no-install-suggests && rm -rf /var/lib/apt/lists/*
-
-RUN conda create -y -n colabfold -c conda-forge -c bioconda \
+    fi && \
+    # now setup colabfold based off instructions from the colabfold official docker and localcolabfold install script
+    apt-get update && apt-get install -y wget cuda-nvcc-$(echo $CUDA_VERSION | cut -d'.' -f1,2 | tr '.' '-') --no-install-recommends --no-install-suggests && rm -rf /var/lib/apt/lists/* && \
+    conda create -y -n colabfold -c conda-forge -c bioconda \
         git python=3.11 openmm==8.0.0 pdbfixer \
         kalign2=2.04 hhsuite=3.3.0 mmseqs2=$MMSEQS2_VERSION && \
-    conda clean -afy
-
-RUN ${CONDA_DIR}/envs/colabfold/bin/pip install -q --no-warn-conflicts "colabfold[alphafold-minus-jax] @ git+https://github.com/sokrypton/ColabFold"
-RUN ${CONDA_DIR}/envs/colabfold/bin/pip install "colabfold[alphafold]"
-RUN ${CONDA_DIR}/envs/colabfold/bin/pip install --upgrade 'jax[cuda12_pip]'==0.4.29 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
-RUN ${CONDA_DIR}/envs/colabfold/bin/pip install tensorflow
+    conda clean -afy && \
+    ${CONDA_DIR}/envs/colabfold/bin/pip install -q --no-warn-conflicts "colabfold[alphafold-minus-jax] @ git+https://github.com/sokrypton/ColabFold" && \
+    ${CONDA_DIR}/envs/colabfold/bin/pip install "colabfold[alphafold]" && \
+    ${CONDA_DIR}/envs/colabfold/bin/pip install --upgrade 'jax[cuda12_pip]'==0.4.29 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html && \
+    ${CONDA_DIR}/envs/colabfold/bin/pip install tensorflow && \
+    conda clean --tarballs --index-cache --packages --yes && \
+    conda clean --force-pkgs-dirs --all --yes  
 
 ENV PATH=${CONDA_DIR}/envs/colabfold/bin:$PATH
 ENV MPLBACKEND=Agg
