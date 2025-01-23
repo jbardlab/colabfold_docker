@@ -59,7 +59,7 @@ RUN ${CONDA_DIR}/envs/colabfold/bin/pip install "colabfold[alphafold]"
 RUN ${CONDA_DIR}/envs/colabfold/bin/pip install --upgrade 'jax[cuda12_pip]'==0.4.29 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 RUN ${CONDA_DIR}/envs/colabfold/bin/pip install tensorflow
 
-ENV PATH=${CONDA_DIR}/envs/colabfold/bin/bin:$PATH
+ENV PATH=${CONDA_DIR}/envs/colabfold/bin:$PATH
 ENV MPLBACKEND=Agg
 
 VOLUME cache
