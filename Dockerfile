@@ -50,8 +50,8 @@ RUN apt-get update > /dev/null && \
         git python=3.11 openmm==8.0.0 pdbfixer \
         kalign2=2.04 hhsuite=3.3.0 mmseqs2=$MMSEQS2_VERSION && \
     conda clean -afy && \
-    ${CONDA_DIR}/envs/colabfold/bin/pip install -q --no-warn-conflicts "colabfold[alphafold-minus-jax] @ git+https://github.com/sokrypton/ColabFold" && \
-    ${CONDA_DIR}/envs/colabfold/bin/pip install "colabfold[alphafold]" && \
+    ${CONDA_DIR}/envs/colabfold/bin/pip install -q --no-warn-conflicts "colabfold[alphafold-minus-jax] @ git+https://github.com/jabard89/ColabFold@JB" && \
+    ${CONDA_DIR}/envs/colabfold/bin/pip install "colabfold[alphafold] @ git+https://github.com/jabard89/ColabFold@JB" && \
     ${CONDA_DIR}/envs/colabfold/bin/pip install --upgrade 'jax[cuda12_pip]'==0.4.29 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html && \
     ${CONDA_DIR}/envs/colabfold/bin/pip install tensorflow && \
     conda clean --tarballs --index-cache --packages --yes && \

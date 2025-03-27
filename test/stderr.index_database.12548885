@@ -1,0 +1,45 @@
+INFO:colabfold.mmseqs.search:Running mmseqs createdb outputs/query.fas outputs/qdb --shuffle 0
+INFO:colabfold.mmseqs.search:Running mmseqs search outputs/qdb /database_dir/uniref30_2302_db outputs/res outputs/tmp --threads 64 --num-iterations 3 --db-load-mode 0 -a -e 0.1 --max-seqs 10000 --gpu 1 --prefilter-mode 1 --gpu-server 1
+INFO:colabfold.mmseqs.search:Running mmseqs mvdb outputs/tmp/latest/profile_1 outputs/prof_res
+INFO:colabfold.mmseqs.search:Running mmseqs lndb outputs/qdb_h outputs/prof_res_h
+INFO:colabfold.mmseqs.search:Running mmseqs expandaln outputs/qdb /database_dir/uniref30_2302_db.idx outputs/res /database_dir/uniref30_2302_db.idx outputs/res_exp --db-load-mode 0 --threads 64 --expansion-mode 0 -e inf --expand-filter-clusters 1 --max-seq-id 0.95
+INFO:colabfold.mmseqs.search:Running mmseqs align outputs/prof_res /database_dir/uniref30_2302_db.idx outputs/res_exp outputs/res_exp_realign --db-load-mode 0 -e 10 --max-accept 100000 --threads 64 --alt-ali 10 -a
+INFO:colabfold.mmseqs.search:Running mmseqs filterresult outputs/qdb /database_dir/uniref30_2302_db.idx outputs/res_exp_realign outputs/res_exp_realign_filter --db-load-mode 0 --qid 0 --qsc 0.8 --diff 0 --threads 64 --max-seq-id 1.0 --filter-min-enable 100
+INFO:colabfold.mmseqs.search:Running mmseqs result2msa outputs/qdb /database_dir/uniref30_2302_db.idx outputs/res_exp_realign_filter outputs/uniref.a3m --msa-format-mode 6 --db-load-mode 0 --threads 64 --filter-msa 1 --filter-min-enable 1000 --diff 3000 --qid 0.0,0.2,0.4,0.6,0.8,1.0 --qsc 0 --max-seq-id 0.95
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res_exp_realign_filter
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res_exp_realign
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res_exp
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res
+INFO:colabfold.mmseqs.search:Running mmseqs search outputs/prof_res /database_dir/colabfold_envdb_202108_db outputs/res_env outputs/tmp3 --threads 64 --num-iterations 3 --db-load-mode 0 -a -e 0.1 --max-seqs 10000 --gpu 1 --prefilter-mode 1 --gpu-server 1
+INFO:colabfold.mmseqs.search:Running mmseqs expandaln outputs/prof_res /database_dir/colabfold_envdb_202108_db.idx outputs/res_env /database_dir/colabfold_envdb_202108_db.idx outputs/res_env_exp -e inf --expansion-mode 0 --db-load-mode 0 --threads 64
+INFO:colabfold.mmseqs.search:Running mmseqs align outputs/tmp3/latest/profile_1 /database_dir/colabfold_envdb_202108_db.idx outputs/res_env_exp outputs/res_env_exp_realign --db-load-mode 0 -e 10 --max-accept 100000 --threads 64 --alt-ali 10 -a
+INFO:colabfold.mmseqs.search:Running mmseqs filterresult outputs/qdb /database_dir/colabfold_envdb_202108_db.idx outputs/res_env_exp_realign outputs/res_env_exp_realign_filter --db-load-mode 0 --qid 0 --qsc 0.8 --diff 0 --max-seq-id 1.0 --threads 64 --filter-min-enable 100
+INFO:colabfold.mmseqs.search:Running mmseqs result2msa outputs/qdb /database_dir/colabfold_envdb_202108_db.idx outputs/res_env_exp_realign_filter outputs/bfd.mgnify30.metaeuk30.smag30.a3m --msa-format-mode 6 --db-load-mode 0 --threads 64 --filter-msa 1 --filter-min-enable 1000 --diff 3000 --qid 0.0,0.2,0.4,0.6,0.8,1.0 --qsc 0 --max-seq-id 0.95
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res_env_exp_realign_filter
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res_env_exp_realign
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res_env_exp
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res_env
+INFO:colabfold.mmseqs.search:Running mmseqs mergedbs outputs/qdb outputs/final.a3m outputs/uniref.a3m outputs/bfd.mgnify30.metaeuk30.smag30.a3m
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/bfd.mgnify30.metaeuk30.smag30.a3m
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/uniref.a3m
+INFO:colabfold.mmseqs.search:Running mmseqs unpackdb outputs/final.a3m outputs --unpack-name-mode 0 --unpack-suffix .a3m
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/final.a3m
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/prof_res
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/prof_res_h
+INFO:colabfold.mmseqs.search:Running mmseqs search outputs/qdb /database_dir/uniref30_2302_db outputs/res outputs/tmp --threads 64 --num-iterations 3 --db-load-mode 0 -a -e 0.1 --max-seqs 10000 --gpu 1 --prefilter-mode 1 --gpu-server 1
+INFO:colabfold.mmseqs.search:Running mmseqs expandaln outputs/qdb /database_dir/uniref30_2302_db.idx outputs/res /database_dir/uniref30_2302_db.idx outputs/res_exp --db-load-mode 0 --threads 64 --expansion-mode 0 -e inf --expand-filter-clusters 0 --max-seq-id 0.95
+INFO:colabfold.mmseqs.search:Running mmseqs align outputs/qdb /database_dir/uniref30_2302_db.idx outputs/res_exp outputs/res_exp_realign --db-load-mode 0 -e 0.001 --max-accept 1000000 --threads 64 -c 0.5 --cov-mode 1
+INFO:colabfold.mmseqs.search:Running mmseqs pairaln outputs/qdb /database_dir/uniref30_2302_db outputs/res_exp_realign outputs/res_exp_realign_pair --db-load-mode 0 --pairing-mode 0 --pairing-dummy-mode 0 --threads 64
+INFO:colabfold.mmseqs.search:Running mmseqs align outputs/qdb /database_dir/uniref30_2302_db.idx outputs/res_exp_realign_pair outputs/res_exp_realign_pair_bt --db-load-mode 0 -e inf -a --threads 64
+INFO:colabfold.mmseqs.search:Running mmseqs pairaln outputs/qdb /database_dir/uniref30_2302_db outputs/res_exp_realign_pair_bt outputs/res_final --db-load-mode 0 --pairing-mode 0 --pairing-dummy-mode 1 --threads 64
+INFO:colabfold.mmseqs.search:Running mmseqs result2msa outputs/qdb /database_dir/uniref30_2302_db.idx outputs/res_final outputs/pair.a3m --db-load-mode 0 --msa-format-mode 5 --threads 64
+INFO:colabfold.mmseqs.search:Running mmseqs unpackdb outputs/pair.a3m outputs --unpack-name-mode 0 --unpack-suffix .paired.a3m
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/pair.a3m
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res_exp
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res_exp_realign
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res_exp_realign_pair
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res_exp_realign_pair_bt
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/res_final
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/qdb
+INFO:colabfold.mmseqs.search:Running mmseqs rmdb outputs/qdb_h
